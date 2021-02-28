@@ -1,4 +1,5 @@
-from flask import Flask, render_template, redirect
+
+from flask import Flask, jsonify, render_template, redirect
 import pymongo
 import scrape_mars
 
@@ -13,8 +14,8 @@ client = pymongo.MongoClient(conn)
 @app.route("/")
 def home():
 
-    mars_data = client.db.collection.find_one()
-    return render_template("index.html", mars=mars_data)
+    mars_info = client.db.scraped_mars.find_one()
+    return render_template("index.html", mars_info=mars_info)
 
 
 # Route for scrape function
@@ -22,8 +23,9 @@ def home():
 def scrape():
 
     
-    mars_data = mission_to_mars.scrape_mars()
-    mongo.db.collection.update({}, mars_data, upsert=True)
+    db = client.db.scrape_mars
+    mars_data = scrape_mars.scrape()
+    db.update({}, mars_data, upsert=True)
     return redirect("/")
 
 

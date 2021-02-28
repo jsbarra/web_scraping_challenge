@@ -2,77 +2,49 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Mission to Mars Web Scraping</title>
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mars Information</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
-    <!-- Jumbotron elements -->
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container text-center">
-            <header>
-                <h1 class="display-4"><b>Mission to Mars</b></h1>
-                <button type="button" class="btn btn-secondary btn-lg">
-                    <a class="btn btn-secondary" href="/scrape" role="button">Scrape New Data</a>
-                </button>
-            </header>
+  <div class="container-fluid">
+    <div class="jumbotron text-center">
+        <h1>Mission to Mars</h1>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data!</a></p>
+    </div>
+    <h1>Latest Mars News</h1>
+    <h3>{{mars_info.latest_title}}</h3>
+    <p>{{ mars_info.article_text }}</p>
+    <div class="row">
+        <div class="col-lg-8 col-sm-12">
+            <h1>Featured Mars Image</h1>
+            <img src="{{mars_info.mars_image}}" style="width:80%; height:50%;">
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <h1>Mars Facts</h1>
+            <span>
+                {{mars_info.facts_about_mars|safe}}
+            </span>
         </div>
     </div>
-
-    <!-- Latest NASA-Mars News Container-->
-    <div class="row" id="mars-news">
-        <div class="col-md-12">
-            <div class="media">
-                <div class="media-body">
-                    <h2>Latest Mars News</h2>
-                    <h5>{{db_pull.title}}</h5>
-                    <p>{{db_pull.news_p}}</p>
-                    <hr>
+    <div class="row" style="padding:70px;">
+        <h1>Mars Hemispheres</h1>
+        {% for hemisphere in mars_info.hemi_image_urls %}
+        <div class="col-lg-5 col-xs-12">
+            <div class="thumbnail">
+                <img src="{{hemisphere.img_url}}">
+                <div class="caption">
+                    <h4>{{hemisphere.title}}</h4>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    <!-- Featured Mars Image Container-->
-    <div class="row" id="mars-photo">
-        <div class="col-md-8">
-            <div class="media-body">
-                <h2>Featured Mars Image</h2>
-                <img src={{ db_pull.image }} class='img-fluid max-width' alt="JPL Featured Image">
-            </div>
-        </div>
-        <!-- Mars Facts table Container-->
-        <div class="col-md-4">
-            <div class="media-body">
-                <h2>Mars Facts</h2>
-                {{db_pull.facts_table | safe}}
-            </div>
-        </div>
-    </div>
-    </div>
-    <!-- Mars Hemispheres  -->
-    <div class="container text-center">
-        <div class="row" id="mars-facts"></div>
-        <div class="col-md-12">
-            <div class="media">
-                <div class="media-body">
-                    <h2>Mars Hemispheres</h2>
-                    <hr>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
-
-    <!-- #Use jinja filter on html table | & html boilerplate text -->
-
-
+  </div>
+  </div>
 </body>
 
 </html>

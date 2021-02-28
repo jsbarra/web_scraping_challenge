@@ -6,11 +6,13 @@ from splinter import Browser
 from webdriver_manager.chrome import ChromeDriverManager
 import os
 
-def scrape_mars():
+def scrape():
     # Setup Executive path & initilaze browser
 
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
+    
+    # Add an empty dictionary to store web scrapping
 
     mars_data = {}
 
@@ -69,4 +71,6 @@ def scrape_mars():
 
     mars_data['mars_hemispheres'] = hemi_image_urls
 
-    return(mars_data)
+    return mars_data
+
+  
